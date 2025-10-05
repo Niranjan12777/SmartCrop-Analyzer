@@ -1,7 +1,7 @@
 # SmartCrop-Analyzer
 SmartCrop-Analyzer is an satellite-based agricultural monitoring system that leverages deep learning and spectral analysis to assess crop health, detect stress, and map moisture conditions. Using hyperspectral and multispectral imagery, the model applies UNet/CNN architectures along with vegetation indices to generate fine-resolution maps.
 
-#Dataset Normalization: 
+# Dataset Normalization: 
 Before training, hyperspectral data undergoes preprocessing to remove:
 Noisy spectral bands, Water absorption bands, and other Atmospheric bands by running the Normalize.py script.
 
