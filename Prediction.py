@@ -11,7 +11,7 @@ from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 MODEL_PATH = "unet_crop_analysis.h5"
 INPUT_TIFF = "sentinel2_model_ready.tiff"
 PATCH_SIZE = 32
-STRIDE = PATCH_SIZE // 3   # overlap stride for classification
+STRIDE = PATCH_SIZE // 3
 
 # ------------------------------
 # CLASS LABELS (Indian Pines Dataset)
@@ -46,9 +46,6 @@ print(f"Input image shape: {img.shape}")
 img_norm = (img - np.min(img)) / (np.max(img) - np.min(img))
 H, W, C = img_norm.shape
 
-# ------------------------------
-# PREDICTION WITH SMOOTHING (ONLY for crop classification)
-# ------------------------------
 pred_probs = np.zeros((H, W, len(class_labels)), dtype=np.float32)
 count_map = np.zeros((H, W), dtype=np.float32)
 
@@ -74,11 +71,9 @@ stress_map_conf = 1 - health_map                 # confidence-based stress
 print("✅ Crop classification + health mapping complete.")
 
 # ------------------------------
-# STRESS INDEX (NDRE, no stride)
+# STRESS INDEX (NDRE)
 # ------------------------------
-# Sentinel-2 band mapping:
-# B8 (NIR)  -> index 7
-# B5 (Red Edge) -> index 4
+
 nir = img[:, :, 7].astype(np.float32)
 red_edge = img[:, :, 4].astype(np.float32)
 
@@ -87,11 +82,9 @@ ndre_norm = (ndre - np.min(ndre)) / (np.max(ndre) - np.min(ndre))  # 0–1
 stress_map_ndre = 1 - ndre_norm  # invert: high value = more stress
 
 # ------------------------------
-# MOISTURE INDEX (NDMI, using B8A & B11, no stride)
+# MOISTURE INDEX (NDMI)
 # ------------------------------
-# Sentinel-2 band mapping:
-# B8A (narrow NIR) -> index 8
-# B11 (SWIR1) -> index 10
+
 nir_narrow = img[:, :, 8].astype(np.float32)   # B8A
 swir1 = img[:, :, 10].astype(np.float32)       # B11
 
@@ -128,3 +121,4 @@ plt.colorbar(label="Moisture Index (Red=Dry, Blue=Moist)")
 plt.title("Crop Moisture Index")
 plt.axis("off")
 plt.show()
+
