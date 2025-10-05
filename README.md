@@ -10,6 +10,6 @@ The patches are already uploaded after running the Normalize.py, to train the mo
 
 # Prediction and Mapping:
 This loads the trained Unet model and uses it to predict on the crop health maps, and other maps such as crop stress map and crop moisture index by indexing.
-For the input use the browser_images folder, as it contains the georeferenced images which are used from the sentinel-2 data.
+For the input use the browser_images folder, as it contains the georeferenced images which are used from the sentinel-2 data. Run the tiffConvert.py script to combine the images into a single gereferenced .tiff extension.
 This will generate all the 3 Maps, each output displayed can be exported as a .png
 
